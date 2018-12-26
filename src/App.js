@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Char from './Char/Char';
+import Validation from './Validation/Validation';
 
 class App extends Component {
   state = {
@@ -10,7 +12,8 @@ class App extends Component {
       { id: 'asdf11', name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    userInput: ''
   }
 
   nameChangedHandler = ( event, id ) => {
@@ -32,8 +35,20 @@ class App extends Component {
     this.setState( {persons: persons} );
   }
 
+  lengthHandler = ( event ) => {
+    this.setState( { userInput: event.target.value } );
+  }
+
+  deleteCharHandler = ( index ) => {
+    const text = this.state.userInput.split('');
+    text.splice(index, 1);
+    const updatedText = text.join('');
+    this.setState({userInput: updatedText});
+  }
+
   deletePersonHandler = (personIndex) => {
     // const persons = this.state.persons.slice();
+    // was substituted with a more modern approach.
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
@@ -52,6 +67,13 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+
+    const charList = this.state.userInput.split('').map((ch, index) => {
+      return <Char 
+        character={ch} 
+        key={index}
+        clicked={() => this.deleteCharHandler(index)} />;
+    });
 
     let persons = null;
 
@@ -74,6 +96,12 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
+        <div className="Person">
+          <input type="text" name="userInput" onChange={this.lengthHandler} value={this.state.userInput} />
+          <p>{this.state.userInput}</p>
+          <Validation inputLength={this.state.userInput.length} />
+          {charList}
+        </div>
         <button
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
