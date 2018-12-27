@@ -60,15 +60,6 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
     const charList = this.state.userInput.split('').map((ch, index) => {
       return (
         <Char
@@ -80,6 +71,7 @@ class App extends Component {
     });
 
     let persons = null;
+    let btnClass = '';
 
     if (this.state.showPersons) {
       persons = (
@@ -97,7 +89,7 @@ class App extends Component {
           })}
         </div>
       );
-      style.backgroundColor = 'red';
+      btnClass = cssClasses.Red;
     }
 
     const assignedClasses = [];
@@ -125,7 +117,7 @@ class App extends Component {
             <Validation inputLength={this.state.userInput.length} />
             {charList}
           </div>
-          <button style={style} onClick={this.togglePersonsHandler}>
+          <button className={btnClass} onClick={this.togglePersonsHandler}>
             Toggle Persons
         </button>
           {persons}
