@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import cssClasses from './App.css';
 import Person from './Person/Person';
 import Char from './Char/Char';
 import Validation from './Validation/Validation';
@@ -100,20 +100,20 @@ class App extends Component {
       style.backgroundColor = 'red';
     }
 
-    const classes = [];
+    const assignedClasses = [];
 
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      assignedClasses.push( cssClasses.red );
     }
 
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      assignedClasses.push( cssClasses.bold );
     }
 
     return (
-        <div className="App">
+        <div className={cssClasses.App}>
           <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
+          <p className={assignedClasses.join(' ')}>This is really working!</p>
           <div className="Person">
             <input
               type="text"
